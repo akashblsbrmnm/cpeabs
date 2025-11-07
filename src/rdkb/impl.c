@@ -73,6 +73,7 @@
 #define MQTT_PORT_PARAM "Device.X_RDK_MQTT.Port"
 
 #endif
+#define DEFAULT_MAC    "001a2b112233"
 /*----------------------------------------------------------------------------*/
 /*                               Data Structures                              */
 /*----------------------------------------------------------------------------*/
@@ -187,7 +188,7 @@ char* get_deviceWanMAC()
 
 char* get_deviceMAC()
 {
-	if(strlen(deviceMAC) != 0)
+	if(strlen(deviceMAC) != 0 && strncmp(deviceMAC, DEFAULT_MAC, strlen(DEFAULT_MAC)) != 0)
 	{
 		CpeabsDebug("deviceMAC returned %s\n", deviceMAC);
 		return deviceMAC;
@@ -198,10 +199,10 @@ char* get_deviceMAC()
 	macID = getParamValue(DEVICE_MAC);
 	if (macID != NULL)
 	{
-	    cpeabStrncpy(deviceMACValue, macID, strlen(macID)+1);
-	    macIDToLower(deviceMACValue, deviceMAC);
-	    CpeabsDebug("deviceMAC: %s\n",deviceMAC);
-	    CPEABS_FREE(macID);
+		cpeabStrncpy(deviceMACValue, macID, strlen(macID)+1);
+		macIDToLower(deviceMACValue, deviceMAC);
+		CpeabsDebug("deviceMAC: %s\n",deviceMAC);
+		CPEABS_FREE(macID);
 	}
 	CpeabsDebug("deviceMAC returned from lib is %s\n", deviceMAC);
 	return deviceMAC;
